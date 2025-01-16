@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="262" height="376"><g id="plate1">
+		<path opacity="0.2" d="M5.0,373.2c-2.8,0.0-5.0-2.2-5.0-5.0v-362.5c0.0-2.8,2.2-5.0,5.0-5.0h250.0c2.8,0.0,5.0,2.2,5.0,5.0v362.5c0.0,2.8-2.2,5.0-5.0,5.0H5.0z"/>
+		<rect x="5.2" y="205.8" fill="#915237" width="250" height="12.5"/>
+		<rect x="5.2" y="5.8" fill="#A06444" width="125" height="200"/>
+		<rect x="130.2" y="5.8" fill="#A06444" width="125" height="200"/>
+		<rect x="5.2" y="355.8" fill="#915237" width="250" height="12.5"/>
+		<rect x="5.2" y="210.8" fill="#A06444" width="250" height="150"/>
+	</g>
+</svg>

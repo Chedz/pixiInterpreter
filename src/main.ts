@@ -11,10 +11,14 @@ import {initInterpreter} from "./interpreter";
   // Append the application canvas to the document body
   document.getElementById("pixi-container")!.appendChild(app.canvas);
 
-  let sprites = await initInterpreter(app, "/assets/scene.json");
+  // let sprites = await initInterpreter(app, "/assets/scene.json");
 
-  console.log(sprites);
-  console.log(sprites[0]);
+  // console.log(sprites);
+  // console.log(sprites[0]);
+  let sprites = [];
+
+  await initInterpreter(app, "/assets/g1-052-3-e5/g1-052-3-e5.json");
+  
   // // Load the bunny texture
   // const texture = await Assets.load("/assets/bunny.png");
 
@@ -57,8 +61,11 @@ import {initInterpreter} from "./interpreter";
     // * Creates frame-independent transformation *
     // bunny.rotation += 0.1 * time.deltaTime;
 
-    sprites.forEach((sprite) => {
-      sprite.rotation += 0.1 * time.deltaTime;
+    sprites.forEach((spriteHolder) => {
+      if(spriteHolder.update){
+        spriteHolder.sprite.rotation += 0.1 * time.deltaTime;
+      }
+      // sprite.rotation += 0.1 * time.deltaTime;
     });
   });
 })();

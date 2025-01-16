@@ -14,9 +14,9 @@ body {
     align-items: center;
 }
 
-/* #pixi-container {
-    width: 50%;
-    height: 50%;
+#pixi-container {
+    width: 800px;
+    height: 600px;
     background-color: red;
     
     position: absolute;
@@ -26,4 +26,4 @@ body {
     right: 0;
     
     margin: auto;
-} */
+}

@@ -1,0 +1,11 @@
+{
+    "bundles":[
+    {
+        "name":"G1-052-3-e5",
+        "assets":[
+            {
+                "alias":"placeholder_img",
+                "src":"/assets/g1-052-3-e5/img/placeholder.svg",
+                "format":"image/svg+xml"
+            },
+                {"alias":"less_img","src":"/assets/g1-052-3-e5/img/less.svg","format":"image/svg+xml"},{"alias":"equal_img","src":"/assets/g1-052-3-e5/img/equal.svg","format":"image/svg+xml"},{"alias":"greater_img","src":"/assets/g1-052-3-e5/img/greater.svg","format":"image/svg+xml"},{"alias":"plate3_img","src":"/assets/g1-052-3-e5/img/plate3.svg","format":"image/svg+xml"},{"alias":"digit9_img","src":"/assets/g1-052-3-e5/img/digit9.svg","format":"image/svg+xml"},{"alias":"digit8_img","src":"/assets/g1-052-3-e5/img/digit8.svg","format":"image/svg+xml"},{"alias":"num1_img","src":"/assets/g1-052-3-e5/img/num1.svg","format":"image/svg+xml"},{"alias":"rightCell1_img","src":"/assets/g1-052-3-e5/img/rightCell1.svg","format":"image/svg+xml"},{"alias":"leftCell1_img","src":"/assets/g1-052-3-e5/img/leftCell1.svg","format":"image/svg+xml"},{"alias":"plate1_img","src":"/assets/g1-052-3-e5/img/plate1.svg","format":"image/svg+xml"},{"alias":"num2_img","src":"/assets/g1-052-3-e5/img/num2.svg","format":"image/svg+xml"},{"alias":"rightCell2_img","src":"/assets/g1-052-3-e5/img/rightCell2.svg","format":"image/svg+xml"},{"alias":"leftCell2_img","src":"/assets/g1-052-3-e5/img/leftCell2.svg","format":"image/svg+xml"},{"alias":"plate2_img","src":"/assets/g1-052-3-e5/img/plate2.svg","format":"image/svg+xml"},{"alias":"back_img","src":"/assets/g1-052-3-e5/img/back.svg","format":"image/svg+xml"}]}]}
