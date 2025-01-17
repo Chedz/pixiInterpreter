@@ -92,7 +92,7 @@ async function constructStage(stageId, jsonContent: any, app: any){
 }
 
 async function addBackgroundToStage(app, backgroundObject) {
-    let background = await addImageToStage(app, { imageSource: backgroundObject._source, id: backgroundObject._id, x: -app.screen.width/2, y: -app.screen.height/2, width: app.screen.width, height: app.screen.height, update: false, zIndex: -1 }, true);
+    let background = await addImageToStage(app, { imageSource: backgroundObject._source, id: backgroundObject._id, x: app.screen.width/2, y: app.screen.height/2, width: app.screen.width, height: app.screen.height, update: false, zIndex: -1 }, true);
     console.log(background);
     return background;
 }
@@ -104,13 +104,16 @@ async function addAllImagesToStage(app, imagesArray) {
 
     imagesArray.forEach(async (imageObject) => {
         // let image = await addImageToStage(app, { imageSource: imageObject._source, id: imageObject._id, x: imageObject._x, y: imageObject._y, update: false, zIndex: 10 });
-        let xPosition = (app.screen.width/2) - Number(imageObject._x);
-        let yPosition = (app.screen.width/2) - Number(imageObject._y);
+        // let xPosition = (app.screen.width/2) - Number(imageObject._x);
+        // let yPosition = (app.screen.width/2) - Number(imageObject._y);
+
+        let xPosition = Number(imageObject._x);
+        let yPosition = Number(imageObject._y);
     
         console.log(xPosition);
         console.log(yPosition);
     
-        let image = await addImageToStage(app, { imageSource: imageObject._source, id: imageObject._id, x: -xPosition, y: -yPosition, update: false, zIndex: 10 });
+        let image = await addImageToStage(app, { imageSource: imageObject._source, id: imageObject._id, x: xPosition, y: yPosition, update: false, zIndex: 10 });
         images.push(image);
     });
 
@@ -256,9 +259,12 @@ async function addImageToStage(app, imageObject, background = false) {
     // Create a new Sprite from the resolved loaded texture
     let backgroundSprite = new Sprite(backImg);
 
-    if(!background) backgroundSprite.anchor.set(0.5);
+    // if(!background) backgroundSprite.anchor.set(0.5, 0.5);
+    // else backgroundSprite.anchor.set(0.5, 0.5);
+    backgroundSprite.anchor.set(0.5, 0.5);
     imageObject.zIndex ? backgroundSprite.zIndex = imageObject.zIndex : backgroundSprite.zIndex = 0;
-    backgroundSprite.position.set(app.screen.width / 2 + imageObject.x, app.screen.height / 2 + imageObject.y);
+    // backgroundSprite.position.set(app.screen.width / 2 + imageObject.x, app.screen.height / 2 + imageObject.y);
+    backgroundSprite.position.set(imageObject.x, imageObject.y);
     imageObject.width ? backgroundSprite.width = imageObject.width : backImg.frame.width;
     imageObject.height ? backgroundSprite.height = imageObject.height : backImg.frame.height;
     app.stage.addChild(backgroundSprite);
