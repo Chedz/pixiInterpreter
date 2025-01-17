@@ -1,5 +1,5 @@
-import { Application, Assets, Sprite } from "pixi.js";
-import {initInterpreter} from "./interpreter";
+import { Application } from "pixi.js";
+import { initInterpreter } from "./interpreter";
 
 (async () => {
   // Create a new application
@@ -11,49 +11,10 @@ import {initInterpreter} from "./interpreter";
   // Append the application canvas to the document body
   document.getElementById("pixi-container")!.appendChild(app.canvas);
 
-  // let sprites = await initInterpreter(app, "/assets/scene.json");
+  let currentStageSprites = await initInterpreter(app, "/assets/combinedJson.json") as any[];
 
-  // console.log(sprites);
-  // console.log(sprites[0]);
-  let sprites = [];
-
-  // await initInterpreter(app, "/assets/g1-052-3-e5/g1-052-3-e5.json");
-  await initInterpreter(app, "/assets/combinedJson.json");
-  
-  // // Load the bunny texture
-  // const texture = await Assets.load("/assets/bunny.png");
-
-  // // Create a bunny Sprite
-  // const bunny = new Sprite(texture);
-
-  // // Center the sprite's anchor point
-  // bunny.anchor.set(0.5);
-
-  // // Move the sprite to the center of the screen
-  // bunny.position.set(app.screen.width / 2, app.screen.height / 2);
-
-  // // Opt-in to interactivity
-  // bunny.eventMode = 'static';
-
-  // // Shows hand cursor
-  // bunny.cursor = 'pointer';
-
-  // // Pointers normalize touch and mouse (good for mobile and desktop)
-  // bunny.on('pointerdown', onClick);
-
-  // bunny.accessible = true;
-
-  // // Add the bunny to the stage
-  // app.stage.addChild(bunny);
-
-  // console.log("Hello, Pixi!");
-  // console.log(bunny);
-
-  // function onClick()
-  // {
-  //   bunny.scale.x *= 1.25;
-  //   bunny.scale.y *= 1.25;
-  // }
+  console.log("currentStageSprites");
+  console.log(currentStageSprites);
 
   // Listen for animate update
   app.ticker.add((time) => {
@@ -62,11 +23,11 @@ import {initInterpreter} from "./interpreter";
     // * Creates frame-independent transformation *
     // bunny.rotation += 0.1 * time.deltaTime;
 
-    sprites.forEach((spriteHolder) => {
-      if(spriteHolder.update){
+    currentStageSprites.forEach((spriteHolder) => {
+      if(spriteHolder.update){ // If the sprite is set to update
+        // do some updating here
         spriteHolder.sprite.rotation += 0.1 * time.deltaTime;
       }
-      // sprite.rotation += 0.1 * time.deltaTime;
     });
   });
 })();
