@@ -1,0 +1,369 @@
+{
+	"item": {
+		"info": {
+			"uid": "G1-052-3-e6",
+			"jiraKey": "EL-28134"
+		},
+		"animation": {
+			"content": {
+				"background": {
+					"_id": "back",
+					"_source": "back_img"
+				},
+				"img": [
+					{
+						"_id": "plate",
+						"_x": "513",
+						"_y": "672",
+						"_source": "plate_img"
+					},
+					{
+						"_id": "bottomCell1",
+						"_x": "283",
+						"_y": "431",
+						"_source": "bottomCell1_img"
+					},
+					{
+						"_id": "bottomCell2",
+						"_x": "743",
+						"_y": "431",
+						"_source": "bottomCell2_img"
+					},
+					{
+						"_id": "digit8",
+						"_x": "250",
+						"_y": "430",
+						"_source": "digit8_img"
+					},
+					{
+						"_id": "digit5",
+						"_x": "315",
+						"_y": "431",
+						"_source": "digit5_img"
+					},
+					{
+						"_id": "placeholder",
+						"_x": "513",
+						"_y": "426",
+						"_source": "placeholder_img"
+					},
+					{
+						"_id": "digit9",
+						"_x": "711",
+						"_y": "430",
+						"_source": "digit9_img"
+					},
+					{
+						"_id": "digit3",
+						"_x": "776",
+						"_y": "430",
+						"_source": "digit3_img"
+					}
+				],
+				"chooseCard": [
+					{
+						"_id": "less",
+						"_x": "353",
+						"_y": "672",
+						"_skin": "less_img"
+					},
+					{
+						"_id": "equal",
+						"_x": "515",
+						"_y": "672",
+						"_skin": "equal_img"
+					},
+					{
+						"_id": "greater",
+						"_x": "676",
+						"_y": "672",
+						"_skin": "greater_img"
+					}
+				]
+			},
+			"steps": {
+				"stepBlock": [
+					{
+						"step": {
+							"play": {
+								"_object": "L1"
+							},
+							"quickFocus": {
+								"_objects": "bottomCell1,bottomCell2,digit8,digit9",
+								"_delay": "0.4"
+							},
+							"_id": "step_L1"
+						},
+						"_description": "start"
+					},
+					{
+						"step": {
+							"play": {
+								"_object": "L2"
+							},
+							"_id": "step_L2"
+						},
+						"_description": "question"
+					},
+					{
+						"submit": {
+							"question": {
+								"controls": {
+									"choosePlaceholder": {
+										"correctAnswer": "less",
+										"_id": "Q1_chp1",
+										"_cards": "less,equal,greater",
+										"_placeholder": "placeholder"
+									}
+								},
+								"_id": "Q1"
+							},
+							"_id": "S1",
+							"_sound": "L2"
+						},
+						"stepBlock": {
+							"stepBlock": {
+								"step": [
+									{
+										"clearControl": {
+											"_object": "Q1_chp1"
+										},
+										"_id": "step_1"
+									},
+									{
+										"play": {
+											"_object": "L3"
+										},
+										"quickFocus": [
+											{
+												"_objects": "bottomCell1,digit8",
+												"_delay": "0.2",
+												"_standby": "-1"
+											},
+											{
+												"_objects": "bottomCell2,digit9",
+												"_delay": "2.3"
+											}
+										],
+										"select": {
+											"_objects": "less",
+											"_delay": "5.2"
+										},
+										"changeSprite": {
+											"_objects": "placeholder",
+											"_sprite": "2",
+											"_delay": "5.2"
+										},
+										"_id": "step_L3"
+									}
+								],
+								"_description": "incorrect 1"
+							},
+							"_if": "Q1.incorrect"
+						},
+						"_description": "ATTEMPT 1"
+					},
+					{
+						"step": [
+							{
+								"play": {
+									"_object": "response_Scott_level2_core_5"
+								},
+								"_id": "step_response_Scott_level2_core_5"
+							},
+							{
+								"play": {
+									"_object": "L4"
+								},
+								"_id": "step_L4"
+							}
+						],
+						"_description": "correct",
+						"_if": "Q1.correct"
+					}
+				]
+			},
+			"resources": {
+				"sound": [
+					{
+						"source": [
+							{
+								"_type": "audio/mp3",
+								"_src": "sound/L1.mp3"
+							},
+							{
+								"_type": "audio/ogg",
+								"_src": "sound/L1.ogg"
+							}
+						],
+						"_id": "L1"
+					},
+					{
+						"source": [
+							{
+								"_type": "audio/mp3",
+								"_src": "sound/L2.mp3"
+							},
+							{
+								"_type": "audio/ogg",
+								"_src": "sound/L2.ogg"
+							}
+						],
+						"_id": "L2"
+					},
+					{
+						"source": [
+							{
+								"_type": "audio/mp3",
+								"_src": "sound/L3.mp3"
+							},
+							{
+								"_type": "audio/ogg",
+								"_src": "sound/L3.ogg"
+							}
+						],
+						"_id": "L3"
+					},
+					{
+						"source": [
+							{
+								"_type": "audio/mp3",
+								"_src": "sound/L4.mp3"
+							},
+							{
+								"_type": "audio/ogg",
+								"_src": "sound/L4.ogg"
+							}
+						],
+						"_id": "L4"
+					},
+					{
+						"source": [
+							{
+								"_type": "audio/mp3",
+								"_src": "sound/response_Scott_level2_core_5.mp3"
+							},
+							{
+								"_type": "audio/ogg",
+								"_src": "sound/response_Scott_level2_core_5.ogg"
+							}
+						],
+						"_id": "response_Scott_level2_core_5"
+					}
+				],
+				"image": [
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/placeholder.svg"
+						},
+						"_id": "placeholder_img",
+						"_sprites": "4"
+					},
+					{
+						"source": [
+							{
+								"_type": "image/svg+xml",
+								"_src": "img/less.svg"
+							},
+							{
+								"_type": "image/png",
+								"_mask": "true",
+								"_src": "img/less_alpha.png"
+							}
+						],
+						"_id": "less_img",
+						"_sprites": "3"
+					},
+					{
+						"source": [
+							{
+								"_type": "image/svg+xml",
+								"_src": "img/equal.svg"
+							},
+							{
+								"_type": "image/png",
+								"_mask": "true",
+								"_src": "img/equal_alpha.png"
+							}
+						],
+						"_id": "equal_img",
+						"_sprites": "3"
+					},
+					{
+						"source": [
+							{
+								"_type": "image/svg+xml",
+								"_src": "img/greater.svg"
+							},
+							{
+								"_type": "image/png",
+								"_mask": "true",
+								"_src": "img/greater_alpha.png"
+							}
+						],
+						"_id": "greater_img",
+						"_sprites": "3"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/plate.svg"
+						},
+						"_id": "plate_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/digit5.svg"
+						},
+						"_id": "digit5_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/digit8.svg"
+						},
+						"_id": "digit8_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/bottomCell1.svg"
+						},
+						"_id": "bottomCell1_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/digit3.svg"
+						},
+						"_id": "digit3_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/digit9.svg"
+						},
+						"_id": "digit9_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/bottomCell2.svg"
+						},
+						"_id": "bottomCell2_img"
+					},
+					{
+						"source": {
+							"_type": "image/svg+xml",
+							"_src": "img/back.svg"
+						},
+						"_id": "back_img"
+					}
+				]
+			}
+		},
+		"_xmlns": "ELContent"
+	}
+}

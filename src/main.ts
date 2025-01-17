@@ -17,7 +17,8 @@ import {initInterpreter} from "./interpreter";
   // console.log(sprites[0]);
   let sprites = [];
 
-  await initInterpreter(app, "/assets/g1-052-3-e5/g1-052-3-e5.json");
+  // await initInterpreter(app, "/assets/g1-052-3-e5/g1-052-3-e5.json");
+  await initInterpreter(app, "/assets/combinedJson.json");
   
   // // Load the bunny texture
   // const texture = await Assets.load("/assets/bunny.png");

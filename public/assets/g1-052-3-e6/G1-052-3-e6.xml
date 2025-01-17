@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<item xmlns="ELContent">
+	<info>
+		<uid>G1-052-3-e6</uid>
+		<jiraKey>EL-28134</jiraKey>
+	</info>
+	<animation>
+		<content>
+			<background id="back" source="back_img"/>
+			<img id="plate" x="513" y="672" source="plate_img"/>
+			<img id="bottomCell1" x="283" y="431" source="bottomCell1_img"/>
+			<img id="bottomCell2" x="743" y="431" source="bottomCell2_img"/>
+			<img id="digit8" x="250" y="430" source="digit8_img"/>
+			<img id="digit5" x="315" y="431" source="digit5_img"/>
+			<img id="placeholder" x="513" y="426" source="placeholder_img"/>
+			<img id="digit9" x="711" y="430" source="digit9_img"/>
+			<img id="digit3" x="776" y="430" source="digit3_img"/>
+			<chooseCard id="less" x="353" y="672" skin="less_img"/>
+			<chooseCard id="equal" x="515" y="672" skin="equal_img"/>
+			<chooseCard id="greater" x="676" y="672" skin="greater_img"/>
+		</content>
+		<steps>
+			<stepBlock description="start">
+				<step id="step_L1">
+					<play object="L1"/>
+					<quickFocus objects="bottomCell1,bottomCell2,digit8,digit9" delay="0.4"/>
+				</step>
+			</stepBlock>
+			<stepBlock description="question">
+				<step id="step_L2">
+					<play object="L2"/>
+				</step>
+			</stepBlock>
+			<stepBlock description="ATTEMPT 1">
+				<submit id="S1" sound="L2">
+					<question id="Q1">
+						<controls>
+							<choosePlaceholder id="Q1_chp1" cards="less,equal,greater" placeholder="placeholder">
+								<correctAnswer>less</correctAnswer>
+							</choosePlaceholder>
+						</controls>
+					</question>
+				</submit>
+				<stepBlock if="Q1.incorrect">
+					<stepBlock description="incorrect 1">
+						<step id="step_1">
+							<clearControl object="Q1_chp1"/>
+						</step>
+						<step id="step_L3">
+							<play object="L3"/>
+							<quickFocus objects="bottomCell1,digit8" delay="0.2" standby="-1"/>
+							<quickFocus objects="bottomCell2,digit9" delay="2.3"/>
+							<select objects="less" delay="5.2"/>
+							<changeSprite objects="placeholder" sprite="2" delay="5.2"/>
+						</step>
+					</stepBlock>
+				</stepBlock>
+			</stepBlock>
+			<stepBlock description="correct" if="Q1.correct">
+				<step id="step_response_Scott_level2_core_5">
+					<play object="response_Scott_level2_core_5"/>
+				</step>
+				<step id="step_L4">
+					<play object="L4"/>
+				</step>
+			</stepBlock>
+		</steps>
+		<resources>
+			<sound id="L1">
+				<source type="audio/mp3" src="sound/L1.mp3"/>
+				<source type="audio/ogg" src="sound/L1.ogg"/>
+			</sound>
+			<sound id="L2">
+				<source type="audio/mp3" src="sound/L2.mp3"/>
+				<source type="audio/ogg" src="sound/L2.ogg"/>
+			</sound>
+			<sound id="L3">
+				<source type="audio/mp3" src="sound/L3.mp3"/>
+				<source type="audio/ogg" src="sound/L3.ogg"/>
+			</sound>
+			<sound id="L4">
+				<source type="audio/mp3" src="sound/L4.mp3"/>
+				<source type="audio/ogg" src="sound/L4.ogg"/>
+			</sound>
+			<sound id="response_Scott_level2_core_5">
+				<source type="audio/mp3" src="sound/response_Scott_level2_core_5.mp3"/>
+				<source type="audio/ogg" src="sound/response_Scott_level2_core_5.ogg"/>
+			</sound>
+			<image id="placeholder_img" sprites="4">
+				<source type="image/svg+xml" src="img/placeholder.svg"/>
+			</image>
+			<image id="less_img" sprites="3">
+				<source type="image/svg+xml" src="img/less.svg"/>
+				<source type="image/png" mask="true" src="img/less_alpha.png"/>
+			</image>
+			<image id="equal_img" sprites="3">
+				<source type="image/svg+xml" src="img/equal.svg"/>
+				<source type="image/png" mask="true" src="img/equal_alpha.png"/>
+			</image>
+			<image id="greater_img" sprites="3">
+				<source type="image/svg+xml" src="img/greater.svg"/>
+				<source type="image/png" mask="true" src="img/greater_alpha.png"/>
+			</image>
+			<image id="plate_img">
+				<source type="image/svg+xml" src="img/plate.svg"/>
+			</image>
+			<image id="digit5_img">
+				<source type="image/svg+xml" src="img/digit5.svg"/>
+			</image>
+			<image id="digit8_img">
+				<source type="image/svg+xml" src="img/digit8.svg"/>
+			</image>
+			<image id="bottomCell1_img">
+				<source type="image/svg+xml" src="img/bottomCell1.svg"/>
+			</image>
+			<image id="digit3_img">
+				<source type="image/svg+xml" src="img/digit3.svg"/>
+			</image>
+			<image id="digit9_img">
+				<source type="image/svg+xml" src="img/digit9.svg"/>
+			</image>
+			<image id="bottomCell2_img">
+				<source type="image/svg+xml" src="img/bottomCell2.svg"/>
+			</image>
+			<image id="back_img">
+				<source type="image/svg+xml" src="img/back.svg"/>
+			</image>
+		</resources>
+	</animation>
+</item>

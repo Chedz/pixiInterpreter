@@ -1,4 +1,4 @@
-import { Assets, Sprite } from "pixi.js";
+import { Assets, Sprite, Spritesheet, AnimatedSprite } from "pixi.js";
 import { lazyLoadResources } from "./assetLoader";
 
 async function initInterpreter(appObject: any, jsonUrl: string) {
@@ -13,37 +13,55 @@ async function initInterpreter(appObject: any, jsonUrl: string) {
         const json = await response.json();
         console.log(json);
 
-        lazyLoadResources(json.item.info.uid, json.item.animation.resources, appObject);
-        constructStage(json.item.info.uid, json.item.animation.content, appObject);
+        // lazyLoadResources(json.item.info.uid, json.item.animation.resources, appObject, json.item.animation.content);
+        // await constructStage(json.item.info.uid, json.item.animation.content, appObject);
+
+        lazyLoadResources(json, appObject);
+        await constructStage(json.item[0].info.uid, json.item[0].animation.content, appObject);
+        // await constructStage(json.item[1].info.uid, json.item[1].animation.content, appObject);
+
+        console.log(appObject.stage.children);
+
+        //create two arrow buttons at the bottom of the screen via the dom
+        let leftArrow = document.createElement("button");
+        leftArrow.innerHTML = "Excercise 5";
+        leftArrow.style.position = "absolute";
+        leftArrow.style.bottom = "10";
+        leftArrow.style.top = "0";
+        leftArrow.style.left = "0";
+        leftArrow.style.right = "10";
+        leftArrow.style.zIndex = "1000";
+        leftArrow.onclick = async () => {
+            await clearStage(appObject);
+            await constructStage(json.item[0].info.uid, json.item[0].animation.content, appObject);
+        }
+        document.body.appendChild(leftArrow);
+
+
+        let rightArrow = document.createElement("button");
+        rightArrow.innerHTML = "Excercise 6";
+        rightArrow.style.position = "absolute";
+        rightArrow.style.bottom = "10";
+        rightArrow.style.top = "0";
+        rightArrow.style.left = "10";
+        rightArrow.style.right = "0";
+        rightArrow.style.zIndex = "1000";
+        rightArrow.onclick = async () => {
+            await clearStage(appObject);
+            await constructStage(json.item[1].info.uid, json.item[1].animation.content, appObject);
+        }
+        document.body.appendChild(rightArrow);
+
+
+        // setTimeout(async () => {
+        //     await clearStage(appObject);
+        //     await constructStage(json.item[1].info.uid, json.item[1].animation.content, appObject);
+        // }, 5000);
+
+
     } catch (error) {
         console.error(error.message);
     }
-
-    // const json = await Assets.load("/assets/g1-02-3-e5/G1-052-3-e5.json"); //jsonUrl
-    // console.log("json:");
-    // console.log(json);
-    // const json = {
-    //     item: {
-    //         info: "dasa",
-    //         animation: {
-    //             resources: {
-    //             },
-    //         }
-    //     }
-    // }
-
-    // lazyLoadResources(json.item.info.uid, json.item.animation.resources, appObject);
-
-
-    // constructStage(json.item.info.uid, json.item.animation.content, appObject);
-    // fetch(jsonUrl)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         // Now parse json and construct the scene
-    //         constructScene(data, appObject);
-    //     });
-    // let data = { hi: "hello" };
-    // return constructScene(data, appObject);
 }
 
 async function constructStage(stageId, jsonContent: any, app: any){
@@ -66,15 +84,13 @@ async function constructStage(stageId, jsonContent: any, app: any){
         switch (contentType) {
             case "background":
                 // handle background here
-                console.log('in background');
-                console.log(jsonContent[contentType]);
                 sprite = await addBackgroundToStage(app, jsonContent[contentType]);
-                console.log(sprite);
+                // console.log(sprite);
                 break;
             case "img":
                 // handle img here
                 sprite = await addAllImagesToStage(app, jsonContent[contentType]);
-                console.log(sprite);
+                // console.log(sprite);
                 break;
             case "chooseCard":
                 // handle chooseCard here
@@ -89,6 +105,11 @@ async function constructStage(stageId, jsonContent: any, app: any){
 
     console.log("stageSprites!!!!!");
     console.log(stageSprites);
+}
+
+async function clearStage(appObject: any) {
+    await appObject.stage.removeChildren();
+    console.log("Stage cleared!");
 }
 
 async function addBackgroundToStage(app, backgroundObject) {
@@ -107,14 +128,23 @@ async function addAllImagesToStage(app, imagesArray) {
         // let xPosition = (app.screen.width/2) - Number(imageObject._x);
         // let yPosition = (app.screen.width/2) - Number(imageObject._y);
 
-        let xPosition = Number(imageObject._x);
-        let yPosition = Number(imageObject._y);
-    
-        console.log(xPosition);
-        console.log(yPosition);
-    
-        let image = await addImageToStage(app, { imageSource: imageObject._source, id: imageObject._id, x: xPosition, y: yPosition, update: false, zIndex: 10 });
-        images.push(image);
+        // console.log(imageObject);
+
+        if(imageObject._sprites){
+            console.log("foound some sprites:!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            console.log(imageObject);
+
+            let spriteImage = await addSpriteSheetToStage(app,  { imageSource: imageObject._source, id: imageObject._id, x: Number(imageObject._x), y: Number(imageObject._y), update: false, zIndex: 20, spriteCount: imageObject._sprites });
+        } else {
+            // let xPosition = Number(imageObject._x);
+            // let yPosition = Number(imageObject._y);
+        
+            // console.log(xPosition);
+            // console.log(yPosition);
+        
+            let image = await addImageToStage(app, { imageSource: imageObject._source, id: imageObject._id, x: Number(imageObject._x), y: Number(imageObject._y), update: false, zIndex: 10 });
+            images.push(image);
+        }
     });
 
 
@@ -134,102 +164,6 @@ async function addAllImagesToStage(app, imagesArray) {
 
     return images;
 }
-
-// async function constructScene(jsonObject: any, app: any) {
-//     // Construct the scene from the json object
-
-//     // Create sprites array to store all the sprites
-//     let sprites = [];
-//       // Load the bunny texture
-// //   const texture = await Assets.load("/assets/bunny.png");
-
-// //   // Create a bunny Sprite
-// //   const bunny = new Sprite(texture);
-
-// //   // Center the sprite's anchor point
-// //   bunny.anchor.set(0.5);
-
-// //   // Move the sprite to the center of the screen
-// //   bunny.position.set(app.screen.width / 2, app.screen.height / 2);
-
-// //   // Opt-in to interactivity
-// //   bunny.eventMode = 'static';
-
-// //   // Shows hand cursor
-// //   bunny.cursor = 'pointer';
-
-// //   // Pointers normalize touch and mouse (good for mobile and desktop)
-// //   bunny.on('pointerdown', onClick);
-
-// //   bunny.accessible = true;
-
-// //   // Add the bunny to the stage
-// //   app.stage.addChild(bunny);
-
-// //   console.log("Hello, Pixi!");
-// //   console.log(bunny);
-
-// //   function onClick()
-// //   {
-// //     bunny.scale.x *= 1.25;
-// //     bunny.scale.y *= 1.25;
-// //   }
-
-//     // let bunny1 = await createBunny(app, { x: 0, y: 0 });
-//     // sprites.push(bunny1);
-
-//     // let bunny2 = await createBunny(app, { x: 0, y: 50 });
-//     // sprites.push(bunny2);
-
-//     // let bunny3 = await addImageToStage(app, { imageSource: "/assets/bunny.png", id: "bunny3", x: 0, y: 100, width: 50, height: 50, update: true });
-//     // sprites.push(bunny3);
-
-//     let bunny4 = await addImageToStage(app, { imageSource: "/assets/bunny.png", id: "bunny4", x: 0, y: -100, width: 50, height: 50, update: true });
-//     sprites.push(bunny4);
-
-//     // let background = await addImageToStage(app, { imageSource: "/assets/g1-02-3-e5/img/back.svg", id: "back", x: -400, y: -300, width: 800, height: 600, update: false, zIndex: -1 });
-//     // sprites.push(background);
-
-//     return sprites;
-// }
-
-// async function createBunny(app: any, posOffset: any = { x: 0, y: 0 }) {
-//     const texture = await Assets.load("/assets/bunny.png");
-
-//   // Create a bunny Sprite
-//   const bunny = new Sprite(texture);
-
-//   // Center the sprite's anchor point
-//   bunny.anchor.set(0.5);
-
-//   // Move the sprite to the center of the screen
-//   bunny.position.set(app.screen.width / 2 + posOffset.x, app.screen.height / 2 + posOffset.y);
-
-//   // Opt-in to interactivity
-//   bunny.eventMode = 'static';
-
-//   // Shows hand cursor
-//   bunny.cursor = 'pointer';
-
-//   // Pointers normalize touch and mouse (good for mobile and desktop)
-//   bunny.on('pointerdown', onClick);
-
-//   bunny.accessible = true;
-
-//   // Add the bunny to the stage
-//   app.stage.addChild(bunny);
-
-//   console.log("Hello, Pixi!");
-//   console.log(bunny);
-
-//   function onClick()
-//   {
-//     bunny.scale.x *= 1.25;
-//     bunny.scale.y *= 1.25;
-//   }
-
-//   return bunny;
-// }
 
 async function addImageToStage(app, imageObject, background = false) {
     console.log("addImageToStage");
@@ -251,10 +185,10 @@ async function addImageToStage(app, imageObject, background = false) {
 
     // console.log(loadScreenAssets);
 
-    console.log(loadedStageAssets)
+    // console.log(loadedStageAssets)
 
     let backImg = loadedStageAssets[imageObject.imageSource];
-    console.log(backImg);
+    // console.log(backImg);
 
     // Create a new Sprite from the resolved loaded texture
     let backgroundSprite = new Sprite(backImg);
@@ -268,9 +202,101 @@ async function addImageToStage(app, imageObject, background = false) {
     imageObject.width ? backgroundSprite.width = imageObject.width : backImg.frame.width;
     imageObject.height ? backgroundSprite.height = imageObject.height : backImg.frame.height;
     app.stage.addChild(backgroundSprite);
-    console.log("-----------------");
+    // console.log("-----------------");
     return {id: imageObject.id, update: imageObject.update, sprite: backgroundSprite};
 }
+
+
+async function addSpriteSheetToStage(app, imageObject ){
+
+    console.log("addSpriteSheetToStage");
+    console.log(imageObject);
+    console.log(imageObject.imageSource);
+
+    const texture = loadedStageAssets[imageObject.imageSource];
+    console.log(texture);
+    // construct the atlas data for the spritesheet
+    const atlasData = {
+        meta: {
+            size: { w: texture.frame.width, h: texture.frame.height },
+            image: `${imageObject.imageSource}`,
+        },
+        frames: await constructFramesForSprite(texture.frame, [Number(imageObject.spriteCount), 1]),
+    };
+    // Create the SpriteSheet from data and image
+    const spritesheet = new Spritesheet(
+        texture,
+        atlasData
+    );
+
+    console.log("spritesheet parse starting");
+    // Generate all the Textures asynchronously
+    await spritesheet.parse();
+
+    // // spritesheet is ready to use!
+    // const anim = new AnimatedSprite(spritesheet.animations.enemy);
+
+    // // set the animation speed
+    // anim.animationSpeed = 0.1666;
+    // // play the animation on a loop
+    // anim.play();
+    // // add it to the stage to render
+    // app.stage.addChild(anim);
+
+
+    // for this example just use the first frame of the sprite sheet for all sprite sheets when loaded
+    const sprite = new Sprite(spritesheet.textures.frame_1);
+
+    console.log("sprite from spritesheet!!!");
+    console.log(sprite);
+    console.log(imageObject)
+
+    sprite.anchor.set(0.5, 0.5);
+    imageObject.zIndex ? sprite.zIndex = imageObject.zIndex : sprite.zIndex = 0;
+    // backgroundSprite.position.set(app.screen.width / 2 + imageObject.x, app.screen.height / 2 + imageObject.y);
+    sprite.position.set(imageObject.x, imageObject.y);
+    imageObject.width ? sprite.width = imageObject.width : texture.frame.width;
+    imageObject.height ? sprite.height = imageObject.height : texture.frame.height;
+
+    // sprite.interactive = true;
+    // sprite.accessible = true;
+    
+
+    console.log(app.stage.children);
+    app.stage.addChild(sprite);
+    console.log("-----------------");
+
+    console.log(app.stage.children);
+}
+
+const constructFramesForSprite = async (imageData, spriteSplit = []) => {
+    console.log('in constructFramesForSprite')
+    const { width, height } = imageData;
+
+    const wSplit = width / spriteSplit[0];
+    const hSplit = height / spriteSplit[1];
+
+    console.log(imageData)
+    console.log(spriteSplit);
+
+    const frames = {};
+
+    for (let i = 0; i < spriteSplit[1]; i++) {
+        for (let j = 0; j < spriteSplit[0]; j++) {
+            const frameName = `frame_${i * spriteSplit[0] + j}`;
+            frames[frameName] = {
+                frame: { x: j * wSplit, y: i * hSplit, w: wSplit, h: hSplit },
+                sourceSize: { w: wSplit, h: hSplit },
+                spriteSourceSize: { x: 0, y: 0, w: wSplit, h: hSplit },
+            };
+        }
+    }
+
+    console.log("frames");
+    console.log(frames);
+
+    return frames;
+};
 
 
 export { initInterpreter };
